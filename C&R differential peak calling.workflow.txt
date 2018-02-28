@@ -1,0 +1,61 @@
+##### CUT&RUN differential peak calling notes #####
+
+
+## do this with Diffbind
+start with set of peaks from each condition
+
+get the union peakset and count reads under each condition
+
+export counts matricies
+
+## DESeq2 test
+
+
+##########################################################################################
+##### Method 2 ##### to try to deal with lib normalization & multiple test correction probs
+
+##### concatenate all peaksets
+## script:
+## input:
+## output:
+
+##### optional: add a window to each side (e.g. 100bp)
+## script:
+## input:
+## output:
+## note: leave this out for now
+
+##### union set by bedSort + bedMerge
+## script:
+## input:
+## output:
+
+##### qc: test % of BAMs in union peaks for each file 
+## script:
+## input:
+## output:
+
+##### intersect BAMs with union peaks to get peak specific alignments
+## script:
+## input:
+## output:
+
+##### macs2 randsample BAMs (-n = tag# for the limiting condition) -> .o file is subsampled BAM
+## script:
+## input:
+## output:
+
+##### count alignments under each peak into a count matrix
+## script:
+## input:
+## output:
+
+##### DESeq2 (check that normalization sizes == 1)
+## script:
+## input:
+## output:
+
+#####
+## script:
+## input:
+## output:
