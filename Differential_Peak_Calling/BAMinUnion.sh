@@ -5,7 +5,7 @@
 ##### bash BAMinUnion.sh $BAM $BED
 
 ## add modules
-# module add trim_galore
+# module add
 
 ## define variables
 BAM=`echo $1`
@@ -20,7 +20,7 @@ cat > $NAME.tempscript.sh << EOF
 #$ -j y
 #$ -cwd
 #$ -V
-#$ -l h_vmem=4G
+#$ -l h_vmem=1G
 #$ -pe shm 1
 #$ -l h_rt=5:59:00
 #$ -l s_rt=5:59:00
