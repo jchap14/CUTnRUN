@@ -14,24 +14,14 @@ export counts matricies
 ##########################################################################################
 ##### Method 2 ##### to try to deal with lib normalization & multiple test correction probs
 
-##### concatenate all peaksets
-## script:
-## input:
-## output:
-
-##### optional: add a window to each side (e.g. 100bp)
-## script:
-## input:
-## output:
-## note: leave this out for now
-
-##### union set by bedSort + bedMerge
-## script:
-## input:
-## output:
+##### concatenate all peaksets & get union peak set by bedSort + bedMerge
+## script: generateUnionPeakset.sh
+## input:  $.metadata.csv (formatted for DiffBind), points to peakfiles of interest
+## output: $.union.bed
+## optional: add a window to each side, e.g. 100bp (leave this option out for now)
 
 ##### qc: test % of BAMs in union peaks for each file 
-## script:
+## script: BAMinUnion.sh
 ## input:
 ## output:
 
