@@ -1,6 +1,7 @@
 ##### Import modules     
 import pybedtools 
 from pybedtools import BedTool
+import argparse
 import glob
 import os
 from subprocess import check_output
