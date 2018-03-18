@@ -12,6 +12,7 @@ plt.switch_backend('agg')
 
 ##### Define arguments locally to test script (comment out when bash submitting)
 # bamfile="GFP_K27ac.nmSort.bam"
+# name="GFP_K27ac"
 # spikefile="GFP_K27ac.yst.bam"
 # lengths_analysis=True
 # lengths_image=True
@@ -35,6 +36,7 @@ def parseArguments():
     parser.add_argument('--bamfile', help='bamfile', type=str)
 
     # Optional arguments with defaults
+    parser.add_argument('--name', help='name', type=str)
     parser.add_argument('--spikefile', help='spikefile', type=str)
     parser.add_argument('--lengths_analysis', help='lengths_analysis', type=bool, default=True)
     parser.add_argument('--lengths_image', help='lengths_image', type=bool, default=True)
@@ -59,7 +61,7 @@ def parseArguments():
 
 ##### Define the main function for bdg conversion
 
-def BAM2BDG(bamfile, spikefile, lengths_analysis,
+def BAM2BDG(bamfile, spikefile, name, lengths_analysis,
             lengths_image, size_select_1, size_select_2, bedgraph, chrom_sizes,
             big_wig, size_min_1, size_max_1, size_min_2, size_max_2, multiplying_factor):
     
@@ -277,14 +279,14 @@ def BAM2BDG(bamfile, spikefile, lengths_analysis,
             print('lengths analysis set to false, so no image to display')
         
         else:
-            print('saving combined lengths distribution to file: ' + os.getcwd().split('/')[-1] + str('.lengths'))
+            print('saving combined lengths distribution to file: ' + name + str('.lengths'))
             
-            temp_name = os.getcwd().split('/')[-1] + str('.lengths')
-            lengths_df.to_csv(temp_name, sep='\t', header=True, index=True, index_label='bp')
+            name = name + str('.lengths')
+            lengths_df.to_csv(name, sep='\t', header=True, index=True, index_label='bp')
             
             print('generating image of lengths distribution')
             
-            temp_plot_name = temp_name + str('_plot.png')
+            temp_plot_name = name + str('_plot.png')
             
             fig = plt.figure(figsize=(12,6))
             ax  = fig.add_subplot(111)
@@ -309,7 +311,7 @@ if __name__ == '__main__':
         print(str(a) + ": " + str(args.__dict__[a]))
 
     # Run function
-    BAM2BDG(args.bamfile, args.spikefile,
+    BAM2BDG(args.bamfile, args.spikefile, args.name
             args.lengths_analysis, args.lengths_image, args.size_select_1,
             args.size_select_2, args.bedgraph, args.chrom_sizes, args.big_wig, args.size_min_1,
             args.size_max_1, args.size_min_2, args.size_max_2, args.multiplying_factor)

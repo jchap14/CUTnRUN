@@ -49,6 +49,7 @@ module add ucsc_tools/2.7.2
 
 ## run script
 python /srv/gsfs0/projects/snyder/chappell/scripts/CUTnRUN/PeakCalling/BAM2BDG_indiv.py \
+--name $NAME \
 --bamfile $BAMFILE \
 --spikefile $SPIKEFILE \
 --lengths_analysis $LENGTHS_ANALYSIS \
