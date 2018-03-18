@@ -3,10 +3,10 @@
 
 ##### submit for all sorted yeast bams in CWD (do in screen + QLOGIN for now))
 ## submit 
-# cp /srv/gsfs0/projects/snyder/chappell/scripts/CUTnRUN/py_sam_2_spikenormbg_JAMES.py .
+# cp /srv/gsfs0/projects/snyder/chappell/scripts/CUTnRUN/BAM2BDG.py .
 # screen
 # qlogin -l h_vmem=10G -l h_rt=24:00:00
-# bash run_py_sam_2_spikenormbg_JAMES.py.sh
+# bash run_BAM2BDG.sh
 
 ## this doesn't work yet, for now use above to run on all BAMs at once
 # for x in `/bin/ls *.yst.sorted.bam` ; do bash run_py_sam_2_spikenormbg_JAMES.py.sh $x; done
@@ -16,7 +16,7 @@ source activate CUT_n_RUN
 module add ucsc_tools/2.7.2
 
 ## run script
-python py_sam_2_spikenormbg_JAMES.py
+python BAM2BDG.py
 
 ## deactivate conda environment
 source deactivate
