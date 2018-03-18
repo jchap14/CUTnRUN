@@ -311,7 +311,7 @@ if __name__ == '__main__':
         print(str(a) + ": " + str(args.__dict__[a]))
 
     # Run function
-    BAM2BDG(args.bamfile, args.spikefile, args.name
+    BAM2BDG(args.bamfile, args.spikefile, args.name,
             args.lengths_analysis, args.lengths_image, args.size_select_1,
             args.size_select_2, args.bedgraph, args.chrom_sizes, args.big_wig, args.size_min_1,
             args.size_max_1, args.size_min_2, args.size_max_2, args.multiplying_factor)
