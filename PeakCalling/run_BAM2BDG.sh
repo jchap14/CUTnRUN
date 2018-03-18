@@ -9,7 +9,7 @@
 # bash run_BAM2BDG.sh
 
 ## this doesn't work yet, for now use above to run on all BAMs at once
-# for x in `/bin/ls *.yst.sorted.bam` ; do bash run_py_sam_2_spikenormbg_JAMES.py.sh $x; done
+# for x in `/bin/ls *.nmSort.bam` ; do bash run_BAM2BDG.sh $x; done
 
 ## add modules
 source activate CUT_n_RUN
