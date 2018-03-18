@@ -378,5 +378,5 @@ if __name__ == '__main__':
     # Run function
     BAM2BDG(args.bamfile, args.spikefile, args.ends,
             args.lengths_analysis, args.lengths_image, args.size_select_1,
-            args.size_select_2, args.bedgraph, chrom_sizes, big_wig, size_min_1,
-            size_max_1, size_min_2, size_max_2, multiplying_factor)
+            args.size_select_2, args.bedgraph, args.chrom_sizes, args.big_wig, args.size_min_1,
+            args.size_max_1, args.size_min_2, args.size_max_2, args.multiplying_factor)
