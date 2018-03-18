@@ -229,27 +229,27 @@ def BAM2BDG(bamfile, spikefile, ends, lengths_analysis,
         
         #run bedtools genomecov to generate bedgraph files
         for i in range(len(bdg_names)):
-            BedTool(bed_names[i]).genome_coverage(bdg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(bdg_names[i])
+            BedTool(bed_names[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(bdg_names[i])
         
         if ends:
             for i in range(len(bdg_ends_names)):
-                BedTool(bed_ends_names[i]).genome_coverage(bdg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(bdg_ends_names[i])
+                BedTool(bed_ends_names[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(bdg_ends_names[i])
         
         if size_select_1:
             for i in range(len(size_selected_files_1_bdg)):
-                BedTool(size_selected_files_1[i]).genome_coverage(bdg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_1_bdg[i])
+                BedTool(size_selected_files_1[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_1_bdg[i])
             
             if ends:
                 for i in range(len(size_selected_files_1_ends_bdg)):
-                    BedTool(size_selected_files_1_ends[i]).genome_coverage(bdg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_1_ends_bdg[i])
+                    BedTool(size_selected_files_1_ends[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_1_ends_bdg[i])
         
         if size_select_2:
             for i in range(len(size_selected_files_2_bdg)):
-                BedTool(size_selected_files_2[i]).genome_coverage(bdg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_2_bdg[i])
+                BedTool(size_selected_files_2[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_2_bdg[i])
         
             if ends:
                 for i in range(len(size_selected_files_2_ends_bdg)):
-                    BedTool(size_selected_files_2_ends[i]).genome_coverage(bdg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_2_ends_bdg[i])
+                    BedTool(size_selected_files_2_ends[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_2_ends_bdg[i])
         
         print('finished generating bedgraph files:')
         print('\n')
