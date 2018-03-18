@@ -7,7 +7,7 @@ Genome_build: UCSC hg19
 Genome_build: SacCer3
 
 ##### Trim adaptors from FASTQ files
-## script: CUT_RUN_alignment.sh
+## script: TrimGalore.sh
 ## input: $NAME.untrimmed.R1.fq.gz $NAME.untrimmed.R2.fq.gz
 ## output: $NAME.trim.R1.fq.gz $NAME.trim.R2.fq.gz
 
@@ -43,7 +43,8 @@ Genome_build: SacCer3
 ## input: $NAME.bam
 ## output: BAMstats.txt
 
-##### Convert BAMs to spike normalized bedGraphs (IMPROVE THIS SCRIPT)
+##### Convert BAMs to spike normalized bedGraphs
+##*** IMPROVE THIS SCRIPT: change it to output .bdg, change it to run on individual samples
 ## script: run_py_sam_2_spikenormbg_JAMES.py.sh points to py_sam_2_spikenormbg_JAMES.py
 ## input: $NAME.nmSort.bam
 ## output: $NAME.nmSort.bg
