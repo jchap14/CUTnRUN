@@ -47,13 +47,13 @@ Genome_build: SacCer3
 ##*** IMPROVE THIS SCRIPT: change it to output .bdg, change it to run on individual samples
 ## script: run_py_sam_2_spikenormbg_JAMES.py.sh points to py_sam_2_spikenormbg_JAMES.py
 ## input: $NAME.nmSort.bam
-## output: $NAME.nmSort.bg
+## output: $NAME.nmSort.bdg
 
 ##### compute peaks from bedGraphs (2 options: MACS2 or Threshold)
 
 ###MACS2 method (this seems to generate more peaks that overlap just as well with control sets)
 ## script: ##CUT_RUN_MACS2bdgPeakCall.sh
-## input: $NAME.nmSort.bg
+## input: $NAME.nmSort.bdg
 ## output: $NAME.peaks.bed -> rename: for file in *.narrowPeak; do mv -i "${file}" "${file/.narrowPeak/.peaks.bed}"; done
 
 ###Threshold method

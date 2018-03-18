@@ -13,7 +13,6 @@ plt.switch_backend('agg')
 ##### Define arguments locally to test script (comment out when bash submitting)
 # bamfile="GFP_K27ac.nmSort.bam"
 # spikefile="GFP_K27ac.yst.bam"
-# ends=False
 # lengths_analysis=True
 # lengths_image=True
 # size_select_1=True
@@ -37,7 +36,6 @@ def parseArguments():
 
     # Optional arguments with defaults
     parser.add_argument('--spikefile', help='spikefile', type=str)
-    parser.add_argument('--ends', help='ends', type=bool, default=False)
     parser.add_argument('--lengths_analysis', help='lengths_analysis', type=bool, default=True)
     parser.add_argument('--lengths_image', help='lengths_image', type=bool, default=True)
     parser.add_argument('--size_select_1', help='size_select_1', type=bool, default=True)
@@ -61,7 +59,7 @@ def parseArguments():
 
 ##### Define the main function for bdg conversion
 
-def BAM2BDG(bamfile, spikefile, ends, lengths_analysis,
+def BAM2BDG(bamfile, spikefile, lengths_analysis,
             lengths_image, size_select_1, size_select_2, bedgraph, chrom_sizes,
             big_wig, size_min_1, size_max_1, size_min_2, size_max_2, multiplying_factor):
     
@@ -108,17 +106,11 @@ def BAM2BDG(bamfile, spikefile, ends, lengths_analysis,
     
     bed_names = [f.replace('bam', 'bed') for f in dataFiles]
     
-    bed_ends_names = [f.replace('bam', 'ends.bed') for f in dataFiles]
-    
     size_selected_files_1 = [f.replace('bam', str(size_min_1) + '_' + str(size_max_1) + '.bed') for f in dataFiles]
-    
-    size_selected_files_1_ends = [f.replace('bam', str(size_min_1) + '_' + str(size_max_1) + '.ends.bed') for f in dataFiles]
     
     size_selected_files_2 = [f.replace('bam', str(size_min_2) + '_' + str(size_max_2) + '.bed') for f in dataFiles]
     
-    size_selected_files_2_ends = [f.replace('bam', str(size_min_2) + '_' + str(size_max_2) + '.ends.bed') for f in dataFiles]
-    
-    all_beds = bed_names + bed_ends_names + size_selected_files_1 +size_selected_files_1_ends + size_selected_files_2 + size_selected_files_2_ends
+    all_beds = bed_names + size_selected_files_1 + size_selected_files_2
     
     
     #generate filenames for length analysis as will perform on each datafile on fly rather than reloading
@@ -171,17 +163,11 @@ def BAM2BDG(bamfile, spikefile, ends, lengths_analysis,
     if size_select_1:
         print('whole insert bed files with size selection #1:'+'\n'+'\n'.join(size_selected_files_1))
         print('\n')
-        if ends:
-            print('insert ends bed files with size selection #1:'+'\n'+'\n'.join(size_selected_files_1_ends))
-            print('\n')
     
     
     if size_select_2:
         print('whole insert bed files with size selection #2:'+'\n'+'\n'.join(size_selected_files_2))
         print('\n')
-        if ends:
-            print('insert ends bed files with size selection #2:'+'\n'+'\n'.join(size_selected_files_2_ends))
-            print('\n')
     
     
     #####################################################
@@ -194,15 +180,10 @@ def BAM2BDG(bamfile, spikefile, ends, lengths_analysis,
         #generate file names for the bedgraphs
         bdg_names  = [f.replace('bed', 'bdg') for f in bed_names]
         
-        bdg_ends_names = [f.replace('bed', 'bdg') for f in bed_ends_names]
         
         size_selected_files_1_bdg = [f.replace('bed', 'bdg') for f in size_selected_files_1]
         
-        size_selected_files_1_ends_bdg = [f.replace('bed', 'bdg') for f in size_selected_files_1_ends]
-        
         size_selected_files_2_bdg = [f.replace('bed', 'bdg') for f in size_selected_files_2]
-        
-        size_selected_files_2_ends_bdg = [f.replace('bed', 'bdg') for f in size_selected_files_2_ends]
         
         all_bdg = [f.replace('bed', 'bdg') for f in all_beds]
         
@@ -231,45 +212,24 @@ def BAM2BDG(bamfile, spikefile, ends, lengths_analysis,
         for i in range(len(bdg_names)):
             BedTool(bed_names[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(bdg_names[i])
         
-        if ends:
-            for i in range(len(bdg_ends_names)):
-                BedTool(bed_ends_names[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(bdg_ends_names[i])
-        
         if size_select_1:
             for i in range(len(size_selected_files_1_bdg)):
                 BedTool(size_selected_files_1[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_1_bdg[i])
-            
-            if ends:
-                for i in range(len(size_selected_files_1_ends_bdg)):
-                    BedTool(size_selected_files_1_ends[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_1_ends_bdg[i])
         
         if size_select_2:
             for i in range(len(size_selected_files_2_bdg)):
                 BedTool(size_selected_files_2[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_2_bdg[i])
         
-            if ends:
-                for i in range(len(size_selected_files_2_ends_bdg)):
-                    BedTool(size_selected_files_2_ends[i]).genome_coverage(bg = True, genome = chrom_sizes, scale = scaling_factor[i]).moveto(size_selected_files_2_ends_bdg[i])
-        
         print('finished generating bedgraph files:')
         print('\n')
         print('whole insert bedgraph files:'+'\n'+'\n'.join(bdg_names))
         print('\n')
-        if ends:
-            print('insert ends bedgraph files:'+'\n'+'\n'.join(bdg_ends_names))
-            print('\n')
         if size_select_1:
             print('whole insert bedgraph files with size selection #1:'+'\n'+'\n'.join(size_selected_files_1_bdg))
             print('\n')
-            if ends:
-                print('insert ends bedgraph files with size selection #1:'+'\n'+'\n'.join(size_selected_files_1_ends_bdg))
-                print('\n')
         if size_select_2:
             print('whole insert bedgraph files with size selection #2:'+'\n'+'\n'.join(size_selected_files_2_bdg))
             print('\n')
-            if ends:
-                print('insert ends bedgraph files with size selection #2:'+'\n'+'\n'.join(size_selected_files_2_ends_bdg))
-                print('\n')
 
     #####################################################
     #make bigwig files from all the bedgraphs generated
@@ -283,15 +243,9 @@ def BAM2BDG(bamfile, spikefile, ends, lengths_analysis,
         #generate file names for the bigwigs
         bw_names  = [f.replace('bdg', 'bw') for f in bdg_names]
         
-        bw_ends_names = [f.replace('bdg', 'bw') for f in bdg_ends_names]
-        
         size_selected_files_1_bw = [f.replace('bdg', 'bw') for f in size_selected_files_1_bdg]
         
-        size_selected_files_1_ends_bw = [f.replace('bdg', 'bw') for f in size_selected_files_1_ends_bdg]
-        
         size_selected_files_2_bw = [f.replace('bdg', 'bw') for f in size_selected_files_2_bdg]
-        
-        size_selected_files_2_ends_bw = [f.replace('bdg', 'bw') for f in size_selected_files_2_ends_bdg]
         
         all_bw = [f.replace('bdg', 'bw') for f in all_beds]
         
@@ -299,45 +253,24 @@ def BAM2BDG(bamfile, spikefile, ends, lengths_analysis,
         for i in range(len(bdg_names)):
             bedgraph_to_bigwig(BedTool(bdg_names[i]), chrom_sizes, bw_names[i])
         
-        if ends:
-            for i in range(len(bdg_ends_names)):
-                bedgraph_to_bigwig(BedTool(bdg_ends_names[i]), chrom_sizes, bw_ends_names[i])
-        
         if size_select_1:
             for i in range(len(size_selected_files_1_bdg)):
                 bedgraph_to_bigwig(BedTool(size_selected_files_1_bdg[i]), chrom_sizes, size_selected_files_1_bw[i])
-            
-            if ends:
-                for i in range(len(size_selected_files_1_ends_bdg)):
-                    bedgraph_to_bigwig(BedTool(size_selected_files_1_ends_bdg[i]), chrom_sizes, size_selected_files_1_ends_bw[i])
         
         if size_select_2:
             for i in range(len(size_selected_files_2_bdg)):
                 bedgraph_to_bigwig(BedTool(size_selected_files_2_bdg[i]), chrom_sizes, size_selected_files_2_bw[i])
         
-            if ends:
-                for i in range(len(size_selected_files_2_ends_bdg)):
-                    bedgraph_to_bigwig(BedTool(size_selected_files_2_ends_bdg[i]), chrom_sizes, size_selected_files_2_ends_bw[i])
-        
         print('finished generating bigwig files:')
         print('\n')
         print('whole insert bigwig files:'+'\n'+'\n'.join(bw_names))
         print('\n')
-        if ends:
-            print('insert ends bigwig files:'+'\n'+'\n'.join(bw_ends_names))
-            print('\n')
         if size_select_1:
             print('whole insert bigwig files with size selection #1:'+'\n'+'\n'.join(size_selected_files_1_bw))
             print('\n')
-            if ends:
-                print('insert ends bigwig files with size selection #1:'+'\n'+'\n'.join(size_selected_files_1_ends_bw))
-                print('\n')
         if size_select_2:
             print('whole insert bigwig files with size selection #2:'+'\n'+'\n'.join(size_selected_files_2_bw))
             print('\n')
-            if ends:
-                print('insert ends bigwig files with size selection #2:'+'\n'+'\n'.join(size_selected_files_2_ends_bw))
-                print('\n')
     
     if lengths_image:
         if lengths_analysis==False:
@@ -376,7 +309,7 @@ if __name__ == '__main__':
         print(str(a) + ": " + str(args.__dict__[a]))
 
     # Run function
-    BAM2BDG(args.bamfile, args.spikefile, args.ends,
+    BAM2BDG(args.bamfile, args.spikefile,
             args.lengths_analysis, args.lengths_image, args.size_select_1,
             args.size_select_2, args.bedgraph, args.chrom_sizes, args.big_wig, args.size_min_1,
             args.size_max_1, args.size_min_2, args.size_max_2, args.multiplying_factor)

@@ -17,7 +17,6 @@ BAMFILE=$1
 NAME=`basename $BAMFILE .nmSort.bam`
 SPIKEFILE=`echo $NAME.yst.bam`
 MERGE_CLOSE_PEAKS="True"
-ENDS=False
 LENGTHS_ANALYSIS=True
 LENGTHS_IMAGE=True
 SIZE_SELECT_1=True
@@ -52,7 +51,6 @@ module add ucsc_tools/2.7.2
 python /srv/gsfs0/projects/snyder/chappell/scripts/CUTnRUN/PeakCalling/BAM2BDG_indiv.py \
 --bamfile $BAMFILE \
 --spikefile $SPIKEFILE \
---ends $ENDS \
 --lengths_analysis $LENGTHS_ANALYSIS \
 --lengths_image $LENGTHS_IMAGE \
 --size_select_1 $SIZE_SELECT_1 \
