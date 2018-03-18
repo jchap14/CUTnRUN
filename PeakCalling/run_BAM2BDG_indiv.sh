@@ -51,9 +51,7 @@ module add ucsc_tools/2.7.2
 ## run script
 python /srv/gsfs0/projects/snyder/chappell/scripts/CUTnRUN/PeakCalling/BAM2BDG_indiv.py \
 --bamfile $BAMFILE \
---name $NAME \
 --spikefile $SPIKEFILE \
---merge_close_peaks $MERGE_CLOSE_PEAKS \
 --ends $ENDS \
 --lengths_analysis $LENGTHS_ANALYSIS \
 --lengths_image $LENGTHS_IMAGE \
