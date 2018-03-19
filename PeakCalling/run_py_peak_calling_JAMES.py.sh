@@ -2,10 +2,10 @@
 # This is the submission script for "py_peak_calling_JAMES.py"
 
 # submit for a specific bedgraph
-# bash run_py_peak_calling_JAMES.py.sh $SAMPLE.bg
+# bash run_py_peak_calling_JAMES.py.sh $SAMPLE.bdg
 
 ##### submit for all sorted bedgraphs in CWD
-# for x in `/bin/ls *.nmSort.bg` ; do bash run_py_peak_calling_JAMES.py.sh $x; done
+# for x in `/bin/ls *.nmSort.bdg` ; do bash run_py_peak_calling_JAMES.py.sh $x; done
 
 ##### specify variables to pass to py_peak_calling_James.py
 BEDGRAPH=$1
@@ -17,7 +17,7 @@ MERGE_CLOSE_PEAKS="True"
 MAX_LENGTH=1000
 GENERATE_ID="True"
 
-NAME=`basename $BEDGRAPH .nmSort.bg`
+NAME=`basename $BEDGRAPH .nmSort.bdg`
 
 ## create tempscript
 cat > $NAME.tempscript.sh << EOF

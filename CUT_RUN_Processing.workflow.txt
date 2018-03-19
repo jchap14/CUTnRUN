@@ -44,8 +44,7 @@ Genome_build: SacCer3
 ## output: BAMstats.txt
 
 ##### Convert BAMs to spike normalized bedGraphs
-##*** IMPROVE THIS SCRIPT: change it to output .bdg, change it to run on individual samples
-## script: run_py_sam_2_spikenormbg_JAMES.py.sh points to py_sam_2_spikenormbg_JAMES.py
+## script: for x in `/bin/ls *.nmSort.bam` ; do bash run_BAM2BDG_indiv.sh $x; done
 ## input: $NAME.nmSort.bam
 ## output: $NAME.nmSort.bdg
 
