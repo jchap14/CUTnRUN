@@ -1,14 +1,14 @@
 #!/bin/bash
 ##### CUT&RUN: test for peaks using yeast normalized human bedgraphs
 
-##### for x in `/bin/ls *.nmSort.bg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh $x; done
+##### for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh $x; done
 
 ## load required modules
 module add MACS2
 
 ## define variables
 BEDGRAPH=$1
-NAME=`basename $1 .nmSort.bg`
+NAME=`basename $1 .nmSort.bdg`
 
 ##### set macs2 bdgpeakcall options -l & -g
 ## -l is minimum length of peak, better to set it as d value. Default is 200bp
