@@ -9,7 +9,7 @@ module add MACS2
 ## define variables
 CUTOFF=$1 #cutoff is 1E^-number
 BEDGRAPH=$2
-NAME=`basename $1 .nmSort.bdg`
+NAME=`basename $BEDGRAPH .nmSort.bdg`
 
 ##### set macs2 bdgpeakcall options -l & -g
 ## -l is minimum length of peak, better to set it as d value. Default is 200bp
