@@ -1,13 +1,14 @@
 #!/bin/bash
 ##### CUT&RUN: test for peaks using yeast normalized human bedgraphs
 
-##### for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh $x; done
+##### for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh {CUTOFF} $x; done
 
 ## load required modules
 module add MACS2
 
 ## define variables
-BEDGRAPH=$1
+CUTOFF=$1 #cutoff is 1E^-number
+BEDGRAPH=$2
 NAME=`basename $1 .nmSort.bdg`
 
 ##### set macs2 bdgpeakcall options -l & -g
@@ -17,7 +18,6 @@ NAME=`basename $1 .nmSort.bdg`
 # -l 20 -g 30 gave 5-7x as many K27ac peaks relative to Zaugg EC set
 L_OPTION=50
 G_OPTION=100
-CUTOFF=5 #cutoff is 1E^-number
 OUTPREFIX=`echo $NAME."FDRe"$CUTOFF`
 
 ##### write a tempscript to be looped over
