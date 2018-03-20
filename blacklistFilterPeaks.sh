@@ -24,8 +24,11 @@ cat > $NAME.tempscript.sh << EOF
 #$ -j y
 #$ -V
 #$ -cwd
-#$ -l h_vmem=5G
+#$ -l h_vmem=2G
 #$ -pe shm 1
+#$ -l h_rt=0:59:00
+#$ -l s_rt=0:59:00
+
 
 ##### remove peaks that intersect with the blacklist.bed
 ## Only report those entries in A that have no overlap in B
