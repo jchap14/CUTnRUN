@@ -36,7 +36,7 @@ cat > $NAME.tempscript.sh << EOF
 source activate CUT_n_RUN
 
 ## run script
-python /srv/gsfs0/projects/snyder/chappell/scripts/CUT_and_RUN_scripts/py_peak_calling_JAMES.py \
+python /srv/gsfs0/projects/snyder/chappell/JR/SLO/CUT_n_RUN/original_set/PeakCalling/py_peak_calling_JAMES.py \
                     --bedgraph $BEDGRAPH \
                     --threshold $THRESHOLD \
                     --min_length $MIN_LENGTH \
