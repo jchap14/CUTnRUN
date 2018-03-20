@@ -6,16 +6,16 @@
 ## for x in `/bin/ls *.peaks.bed` ; do bash blacklistFilterPeaks.sh $x; done
 
 ##### load required modules (uncomment for SCG use)
-# module add bedtools
+# module add bedtools ## in conda environment
 
 ##### set variables
-# NAME=`basename $1 .narrowPeak`
-NAME=`basename $1 .peaks.bed`
+NAME=`basename $1 _peaks.narrowPeak`
+# NAME=`basename $1 .peaks.bed`
 PEAKfile=`echo $1`
 ## uncomment for SCG use 
-# BLACKLIST=/srv/gsfs0/projects/snyder/chappell/Annotations/UCSC-hg19/hg19EncodeMapabilityBlacklist.bed
+BLACKLIST=/srv/gsfs0/projects/snyder/chappell/Annotations/UCSC-hg19/hg19EncodeMapabilityBlacklist.bed
 ## uncomment for local use 
-BLACKLIST="/Users/jchap12/Google\ Drive/BIOINFORMATICS/Annotations/hg19/hg19EncodeMapabilityBlacklist.bed"
+# BLACKLIST="/Users/jchap12/Google\ Drive/BIOINFORMATICS/Annotations/hg19/hg19EncodeMapabilityBlacklist.bed"
 
 ##### create a tempscript for queue sub
 cat > $NAME.tempscript.sh << EOF
@@ -30,13 +30,13 @@ cat > $NAME.tempscript.sh << EOF
 ##### remove peaks that intersect with the blacklist.bed
 ## Only report those entries in A that have no overlap in B
 
-bedtools intersect -v -a $PEAKfile -b $BLACKLIST > $NAME.filt.Peaks.bed
+bedtools intersect -v -a $PEAKfile -b $BLACKLIST > $NAME.Peaks.bed
 EOF
 
 ## qsub on scg
-# qsub $NAME.tempscript.sh
+qsub $NAME.tempscript.sh
 ## bash locally
-bash $NAME.tempscript.sh
+# bash $NAME.tempscript.sh
 
 sleep 1
 ## remove the tempscript

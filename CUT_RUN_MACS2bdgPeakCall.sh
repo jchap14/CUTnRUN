@@ -2,6 +2,9 @@
 ##### CUT&RUN: test for peaks using yeast normalized human bedgraphs
 
 ##### for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh {CUTOFF} $x; done
+# for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh 2 $x; done
+# for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh 5 $x; done
+# for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh 10 $x; done
 
 ## load required modules
 module add MACS2
