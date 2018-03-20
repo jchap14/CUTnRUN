@@ -5,7 +5,7 @@
 
 ## add modules
 module add bowtie/2.2.6
-module add samtools
+# module add samtools ## samtools is in conda env
 
 ## define variables
 name=`basename $1 .trim.R1.fq.gz`

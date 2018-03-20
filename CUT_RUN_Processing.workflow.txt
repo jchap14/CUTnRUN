@@ -1,5 +1,3 @@
-change all .bg to .bdg at some point
-
 ######## CUT&RUN data processing notes from #######
 ### https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2247149
 
@@ -16,11 +14,6 @@ Genome_build: SacCer3
 ## input: $NAME.trim.R1.fq.gz $NAME.trim.R2.fq.gz
 ## output: $NAME.bam $NAME.yst.bam $NAME.CR_align.o$NAME
 #$NAME Note: only properly paired BAMs are output (--no-unal --no-mixed --no-discordant)
-
-##### Index, Flagstat/IDXstat BAMs (QC) -> generates BAMstats.txt
-## script: samtools_index_stats.sh
-## input: $NAME.bam
-## output: BAMstats.txt
 
 ##### Remove BAM alignments with MAPQ < 30 (excludes yeast BAMs)
 ## script: BAM_MAPQ30_filt.sh
@@ -53,7 +46,8 @@ Genome_build: SacCer3
 ###MACS2 method (this seems to generate more peaks that overlap just as well with control sets)
 ## script: ##CUT_RUN_MACS2bdgPeakCall.sh
 ## input: $NAME.nmSort.bdg
-## output: $NAME.peaks.bed -> rename: for file in *.narrowPeak; do mv -i "${file}" "${file/.narrowPeak/.peaks.bed}"; done
+## output: $NAME.X.narrowPeak
+## optional: rename: for file in *.narrowPeak; do mv -i "${file}" "${file/.narrowPeak/.peaks.bed}"; done
 
 ###Threshold method
 ## script: ## run_py_peak_calling_JAMES.py.sh points to py_peak_calling_JAMES.py
