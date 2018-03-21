@@ -17,8 +17,8 @@ cat > $name.tempscript.sh << EOF
 #$ -j y
 #$ -cwd
 #$ -V
-#$ -l h_vmem=6G
-#$ -pe shm 4
+#$ -l h_vmem=4G
+#$ -pe shm 12
 #$ -l h_rt=11:59:00
 #$ -l s_rt=11:59:00
 
@@ -27,7 +27,7 @@ cat > $name.tempscript.sh << EOF
 ## run bowtie against human genome
 echo "Starting Bowtie Alignment against Human"
 bowtie2 --local --very-sensitive-local --no-unal --no-mixed \
---no-discordant -I 10 -X 700 --threads 4 \
+--no-discordant -I 10 -X 700 --threads 12 \
 -x /ifs/scratch/leepc12/pipeline_genome_data/hg19/bowtie2_index/male.hg19.fa \
 -1 $1 -2 $name.trim.R2.fq.gz -S $name.sam
 # sorts by coordinate -> works for flagstat and idxstats
@@ -37,7 +37,7 @@ rm $name.sam
 ## run bowtie against fly genome
 echo "Starting Bowtie Alignment against Yeast"
 bowtie2 --local --very-sensitive-local --no-unal --no-mixed \
---no-discordant -I 10 -X 700 --threads 4 \
+--no-discordant -I 10 -X 700 --threads 12 \
 -x /srv/gsfs0/projects/snyder/chappell/Annotations/yeast/S288C \
 -1 $1 -2 $name.trim.R2.fq.gz -S $name.yst.sam
 samtools view -Su $name.yst.sam | samtools sort -o $name.yst.bam
