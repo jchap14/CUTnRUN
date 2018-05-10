@@ -6,38 +6,44 @@ Genome_build: SacCer3
 
 ##### Trim adaptors from FASTQ files
 ## script: TrimGalore.sh
+## submit: for x in `/bin/ls *.untrimmed.R1.fq.gz` ; do bash TrimGalore.sh $x; done
 ## input: $NAME.untrimmed.R1.fq.gz $NAME.untrimmed.R2.fq.gz
 ## output: $NAME.trim.R1.fq.gz $NAME.trim.R2.fq.gz
 
 ##### Align reads to hg19 (output BAM sorted by coord) & yeast SacCer3
 ## script: CUT_RUN_alignment.sh
+## submit: for x in `/bin/ls *.trim.R1.fq.gz` ; do bash CUT_RUN_alignment.sh $x; done
 ## input: $NAME.trim.R1.fq.gz $NAME.trim.R2.fq.gz
 ## output: $NAME.bam $NAME.yst.bam $NAME.CR_align.o$NAME
 #$NAME Note: only properly paired BAMs are output (--no-unal --no-mixed --no-discordant)
 
 ##### Remove BAM alignments with MAPQ < 30 (excludes yeast BAMs)
 ## script: BAM_MAPQ30_filt.sh
+## submit: for x in `find . -name "*.bam" -not -name "*.yst.bam"` ; do bash BAM_MAPQ30_filt.sh $x; done
 ## input: $NAME.bam
 ## output: $NAME.Q30.bam
 
 ##### Mark duplicates in the BAMs (excludes yeast BAMs)
 ## script: Picard-MarkDuplicates.sh
+## submit: for x in `find . -name "*.q30.bam" -not -name "*.yst.bam"` ; do bash Picard-MarkDuplicates.sh $x; done
 ## input: $NAME.Q30.bam
 ## output: $NAME.dupmark.bam
 
 ##### Remove duplicates from the BAMs with samtools -F (excludes yeast BAMs)
 ## script: BAM_RemoveDups.sh
+## submit: for x in `find . -name "*.dupmark.bam" -not -name "*.yst.bam"` ; do bash BAM_RemoveDups.sh $x; done
 ## input: $NAME.dupmark.bam
 ## output: $NAME.nmSort.bam
 
 ##### Index, Flagstat/IDXstat BAMs (QC) -> appends to BAMstats.txt
 ## script: samtools_index_stats.sh
-## run command specific to post-filter BAMs: for x in `find . -name "*.nmSort.bam" -not -name "*.yst.nmSort.bam"` ; do bash samtools_index_stats.sh $x; done
+## submit: for x in `find . -name "*.nmSort.bam" -not -name "*.yst.nmSort.bam"` ; do bash samtools_index_stats.sh $x; done
 ## input: $NAME.bam
 ## output: BAMstats.txt
 
 ##### Convert BAMs to spike normalized bedGraphs
-## script: for x in `/bin/ls *.nmSort.bam` ; do bash run_BAM2BDG_indiv.sh $x; done
+## script: run_BAM2BDG_indiv.sh
+## submit: for x in `/bin/ls *.nmSort.bam` ; do bash run_BAM2BDG_indiv.sh $x; done
 ## input: $NAME.nmSort.bam
 ## output: $NAME.nmSort.bdg
 
@@ -45,6 +51,11 @@ Genome_build: SacCer3
 
 ###MACS2 method (this seems to generate more peaks that overlap just as well with control sets)
 ## script: ##CUT_RUN_MACS2bdgPeakCall.sh
+## submit for different pvalues: 
+for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh 1 $x; done
+for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh 2 $x; done
+for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh 5 $x; done
+for x in `/bin/ls *.nmSort.bdg` ; do bash CUT_RUN_MACS2bdgPeakCall.sh 10 $x; done
 ## input: $NAME.nmSort.bdg
 ## output: $NAME.X.narrowPeak
 ## optional: rename: for file in *.narrowPeak; do mv -i "${file}" "${file/.narrowPeak/.peaks.bed}"; done
@@ -52,15 +63,18 @@ Genome_build: SacCer3
 ###Threshold method
 ## script: ## run_py_peak_calling_JAMES.py.sh points to py_peak_calling_JAMES.py
 specify desired threshold based on ???
+## submit: 
 ## input: $NAME.nmSort.bg
 ## output: $NAME.thrX.peaks.bed
 
 ##### remove peaks falling in blacklist (highly mappable) regions
 ## script: blacklistFilterPeaks.sh
+## submit: for x in `/bin/ls *.narrowPeak` ; do bash blacklistFilterPeaks.sh $x; done
 ## input: $NAME.peaks.bed
 ## output: $NAME.filt.Peaks.bed
 
 ##### subtract peaks from the GFP control
 ## script: GFPFilterPeaks.sh
+## submit:
 ## input: $NAME.filt.Peaks.bed
 ## output: $NAME.enrich.Peaks.bed
